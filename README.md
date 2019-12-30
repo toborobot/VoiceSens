@@ -19,7 +19,11 @@
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the project up and running on your web server for development and testing purposes.
+1. install SpeechPro asr service
+   ```
+   git clone https://github.com/STC-VoiceKey/stc-speechkit-python.git
+   ```
 
 1. Sign up for an [IBM Cloud account](https://ibm.biz/devfest2019).
    <p align="center">
