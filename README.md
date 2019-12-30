@@ -24,6 +24,7 @@ These instructions will get you a copy of the project up and running on your web
    ```
    git clone https://github.com/STC-VoiceKey/stc-speechkit-python.git
    ```
+1. register to recieve credintials for ASR and other services here https://cp.speechpro.com/doc/asr#
 
 1. Sign up for an [IBM Cloud account](https://ibm.biz/devfest2019).
    <p align="center">
