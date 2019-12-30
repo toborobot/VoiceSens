@@ -1,4 +1,4 @@
-# VoiceSens - Adding Voice Biometrics to your Application
+# VoiceSens - Adding Voice Biometrics to your Application - fork of script for internet server and possible SpeechPro voice recognition and Russian language
 
 <b>VoiceSens</b> is a <i>text independent</i> voice biometric solution developed to combat some of the shortcomings of standard authentication techniques like passwords and pincodes, as well as current available voice biometric solutions. The solution is developed in Python and uses Watson Speech to Text (speech recognition).
 
@@ -48,7 +48,7 @@ APIKEY = "APIKEY"
 URL = "URL"  
 ```
 
-## Running locally
+## Running on server (Ubuntu 18.04 minimal used under python3)
 
 1. Clone the repository. 
 
@@ -62,36 +62,29 @@ URL = "URL"
     cd VoiceSens
     ```
  
-1. (Optional) Running it in a virtual environment. 
-
-   1. Downloading and installing _virtualenv_. 
+1. install pip 
    ```
-   pip install virtualenv
+   sudo apt-get install python3-pip
    ```
-   
-   2. Create the virtual environment in Python 3.
-   
-   ```
-    virtualenv -p path\to\your\python.exe test_env
-    ```    
-   
-   3. Activate the test environment.     
-   
-        1. For Windows:
-        ```
-        test_env\Scripts\Activate
-        ```        
-        
-        2. For Unix:
-        ```
-        source test_env/bin/activate
-        ```    
 
 1. Install all the required libraries, by installing the requirements.txt file.
 
     ```
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt --user
     ```
+1. install tkinter
+    ```
+    sudo apt-get install python3-tk
+    ```
+1. add openssl to server to enable microphone in browser
+   ```
+   pip3 install pyopenssl
+   ```
+1. edit voice.py to add ssl support to flask (389-390 lines)
+   ```
+   if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=PORT, debug=True, ssl_context='adhoc')
+   ``` 
 
     
 1. Run the application.
