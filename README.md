@@ -92,7 +92,7 @@ URL = "URL"
     python voice.py
     ```
     
-1. Go to `http://localhost:8080`
+1. Go to `https://your_internet_addres_here:8080`
 
 ## Demo
 
