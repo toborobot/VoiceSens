@@ -21,7 +21,6 @@
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Install and set up Python 3.
 1. Sign up for an [IBM Cloud account](https://ibm.biz/devfest2019).
    <p align="center">
     <img src="https://github.com/bedangSen/VoiceSens/blob/master/Images/Screenshot_2019-03-31%20Sign%20up%20for%20IBM%20Cloud.png?raw=true" width="800"  align="middle">
@@ -154,7 +153,6 @@ When you record your voice sample, the first thing you do is record the environm
 
 ## To Do
 
-* Hashing the audio files and signing it with the clients private key, to prevent man in the middle attacks. 
-* Improve the accuracy of the GMM model. 
-* Add solution architecture.
-* Storing the models in a secure Object storage
+* SpeechPro cp.speechpro.com tools 
+* Russian language 
+
