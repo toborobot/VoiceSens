@@ -26,6 +26,13 @@ These instructions will get you a copy of the project up and running on your web
    ```
 1. register to recieve credintials for ASR and other services here https://cp.speechpro.com/doc/asr#
 
+1. install requirements and library
+   ```
+   cd stc-speechkit-python/asr
+   pip3 install -r requirements.txt
+   sudo python3 setup.py install
+   ```
+
 1. Sign up for an [IBM Cloud account](https://ibm.biz/devfest2019).
    <p align="center">
     <img src="https://github.com/bedangSen/VoiceSens/blob/master/Images/Screenshot_2019-03-31%20Sign%20up%20for%20IBM%20Cloud.png?raw=true" width="800"  align="middle">
