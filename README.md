@@ -134,12 +134,11 @@ When you record your voice sample, the first thing you do is record the environm
 
 ## Key Components
 
-* [IBM Watson Speech to Text](https://console.bluemix.net/catalog/services/speech-to-text) - The Speech to Text Service used. 
+* [SpeechPro ASR](https://cp.speechpro.com) - The Speech to Text Service used. 
 * [Scipy](https://www.scipy.org/) - SciPy is a Python-based ecosystem of open-source software for mathematics, science, and engineering. 
 * [Speech Recognition](https://pypi.org/project/SpeechRecognition/) -  Library for performing speech recognition, with support for several engines and APIs, online and offline.
 * [Python Speech Features](https://python-speech-features.readthedocs.io/en/latest/) - This library provides common speech features for ASR including MFCCs and filterbank energies. 
-* [Fuzzy Wuzzy](https://github.com/seatgeek/fuzzywuzzy) - Fuzzy string matching like a boss. It uses Levenshtein Distance to calculate the differences between sequences in a simple-to-use package. 
-* [Random Words](https://pypi.org/project/random-word/) - This is a simple python package to generate random english words. 
+* [Fuzzy Wuzzy](https://github.com/seatgeek/fuzzywuzzy) - Fuzzy string matching like a boss. It uses Levenshtein Distance to calculate the differences between sequences in a simple-to-use package.  
 * [Skitlearn Gaussian Mixture Models](https://scikit-learn.org/stable/modules/mixture.html) - sklearn.mixture is a package which enables one to learn Gaussian Mixture Models
 
 ## References
@@ -150,6 +149,4 @@ When you record your voice sample, the first thing you do is record the environm
 
 ## To Do
 
-* SpeechPro cp.speechpro.com tools 
-* Russian language 
-
+* make authentification
