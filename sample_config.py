@@ -1,3 +1,5 @@
-# recognize speech using IBM Speech to Text
-APIKEY = "APIKEY"  
-URL = "URL" 
+#second approach
+#SpeechPro credintials
+LOGIN = "log"
+SERVER = 000
+PASSWORD = "pass"
