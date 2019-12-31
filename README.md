@@ -33,30 +33,15 @@ These instructions will get you a copy of the project up and running on your web
    sudo python3 setup.py install
    ```
 
-1. Sign up for an [IBM Cloud account](https://ibm.biz/devfest2019).
-   <p align="center">
-    <img src="https://github.com/bedangSen/VoiceSens/blob/master/Images/Screenshot_2019-03-31%20Sign%20up%20for%20IBM%20Cloud.png?raw=true" width="800"  align="middle">
-   </p>
-  
-1. Create an instance of the Speech to Text service and get your credentials:
-    - Go to the [Speech to Text](https://console.bluemix.net/catalog/services/speech-to-text) page in the IBM Cloud Catalog.
-    - Log in to your IBM Cloud account.
-    - Click **Create**.
-    - Click **Show** to view the service credentials.
-    - Copy the `iam_apikey` and `url` values.
-    
-    <p align="center">
-    <img src="https://i.imgur.com/Y0vZNHr.gif" align="middle">
-   </p>
-
 ## Configuring the application
 
 
-1. Open the `sample_config.py` file and change the username and password for the text to speech service. Then rename the file to `config.py` 
+1. Open the `sample_config.py` file and change the username, password and domain for the text to speech service. Then rename the file to `config.py` 
 
 ```python
-APIKEY = "APIKEY"  
-URL = "URL"  
+LOGIN = "your login to SpeechPro"
+SERVER = domain
+PASSWORD = "password to speechpro"  
 ```
 
 ## Running on server (Ubuntu 18.04 minimal used under python3)
@@ -64,7 +49,7 @@ URL = "URL"
 1. Clone the repository. 
 
     ```
-    git clone https://github.com/bedangSen/VoiceSens.git
+    git clone https://github.com/toborobot/VoiceSens.git
     ```
     
 1. Move into the project directory. 
@@ -101,7 +86,7 @@ URL = "URL"
 1. Run the application.
 
     ```
-    python voice.py
+    python3 voice.py
     ```
     
 1. Go to `https://your_internet_addres_here:8080`
