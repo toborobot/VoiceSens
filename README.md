@@ -1,6 +1,6 @@
 # VoiceSens - Adding Voice Biometrics to your Application - fork of script for internet server an SpeechPro ASR with Russian Language
 
-<b>VoiceSens</b> is a <i>text independent</i> voice biometric solution by <b>https://github.com/bedangSen</b> developed to combat some of the shortcomings of standard authentication techniques like passwords and pincodes, as well as current available voice biometric solutions. The solution is developed in Python and uses Watson Speech to Text (speech recognition).
+<b>VoiceSens</b> is a <i>text independent</i> voice biometric solution by <b>https://github.com/bedangSen</b> developed to combat some of the shortcomings of standard authentication techniques like passwords and pincodes, as well as current available voice biometric solutions. The solution is developed in Python and uses SpeechPro ASR (speech recognition).
 
 <p align="center">
  <img src="https://i.imgur.com/PQPkGYo.gif" align="middle">
