@@ -1,4 +1,4 @@
-#!/uspeech_recognition/bin/env python3
+# -- coding: utf-8 --
 """
 This is a demo for a voice biometrics application
 """
@@ -9,6 +9,8 @@ This is a demo for a voice biometrics application
 
 
 # This is used to dump the models into an object
+import json
+import base64
 import pickle
 import datetime
 import os                                               # For creating directories
@@ -30,18 +32,28 @@ from random_words import RandomWords
 from sklearn import preprocessing
 # For using the Gausian Mixture Models
 from sklearn.mixture import GaussianMixture
+# random int string choosen from text file
+from random import randint
+# Speechpro libraries
+from cloud_client.api.session_api import SessionApi
+from cloud_client.models.auth_request_dto import AuthRequestDto
+from cloud_client.api.recognize_api import RecognizeApi
+from cloud_client.api.packages_api import PackagesApi
+from cloud_client.models.audio_file_dto import AudioFileDto
+from cloud_client.models.recognition_request_dto import RecognitionRequestDto
 
-from watson_developer_cloud import SpeechToTextV1
+#whatson developer cloud speech processor
+#from watson_developer_cloud import SpeechToTextV1
 
 
 # Note: Is there a better way to do this?
 # This is the file where the credentials are stored
 import config
 
-speech_to_text = SpeechToTextV1(
-    iam_apikey=config.APIKEY,
-    url=config.URL
-)
+#speech_to_text = SpeechToTextV1(
+#    iam_apikey=config.APIKEY,
+#    url=config.URL
+#)
 
 from flask import Flask, render_template, request, jsonify, url_for, redirect, abort, session, json
 
@@ -49,6 +61,7 @@ PORT = 8080
 
 # Global Variables
 random_words = []
+random_words_transliterated = []
 random_string = ""
 username = ""
 user_directory = "Users/Test"
@@ -156,7 +169,8 @@ def vad():
 
         print("Voice activity detection complete ...")
 
-        random_words = RandomWords().random_words(count=5)
+        #random_words = RandomWords().random_words(count=5)
+        random_words = russian_random_string()
         print(random_words)
 
         return "  ".join(random_words)
@@ -169,7 +183,8 @@ def vad():
 
         print("Voice activity detection complete ...")
 
-        random_words = RandomWords().random_words(count=5)
+        #random_words = RandomWords().random_words(count=5)
+        random_words = russian_random_string()
         print(random_words)
 
         return "  ".join(random_words)
@@ -179,6 +194,7 @@ def vad():
 def voice():
     global user_directory
     global filename_wav
+    random_words_transliterated = []
 
     print("[ DEBUG ] : User directory at voice : ", user_directory)
 
@@ -187,22 +203,48 @@ def voice():
         global random_words
         global username
 
-        filename_wav = user_directory + "-".join(random_words) + '.wav'
+        for word_str in random_words:
+            random_words_transliterated.append(transliterate_str(word_str))
+
+
+        filename_wav = user_directory + "-".join(random_words_transliterated) + '.wav'
+        print(filename_wav)
         f = open(filename_wav, 'wb')
         f.write(request.data)
         f.close()
 
         with open(filename_wav, 'rb') as audio_file:
-             recognised_words = speech_to_text.recognize(audio_file, content_type='audio/wav').get_result()
+             #recognised_words = speech_to_text.recognize(audio_file, content_type='audio/wav').get_result()
+             #print(recognised_words)
 
-        recognised_words = str(recognised_words['results'][0]['alternatives'][0]['transcript'])
-        
+             session_api = SessionApi()
+             credentials = AuthRequestDto(config.LOGIN, config.SERVER, config.PASSWORD)
+             session_id = session_api.login(credentials).session_id
+             print(session_id)
 
-        print("IBM Speech to Text thinks you said : " + recognised_words)
-        print("IBM Fuzzy partial score : " + str(fuzz.partial_ratio(random_words, recognised_words)))
-        print("IBM Fuzzy score : " + str(fuzz.ratio(random_words, recognised_words)))       
+             packages_api = PackagesApi()
+             packages_api.load(session_id, "CommonRus")
 
-        if fuzz.ratio(random_words, recognised_words) < 65:
+             recognize_api = RecognizeApi()
+             data = audio_file.read()
+
+             encoded_string = base64.standard_b64encode(data)
+             string_str = str(encoded_string, 'ascii', 'ignore')
+
+             audio_file_str = AudioFileDto(string_str, "audio/x-wav")
+             recognition_request = RecognitionRequestDto(audio_file_str, "CommonRus")
+             recognition_result = recognize_api.recognize(session_id, recognition_request)
+
+             #print(recognition_result.text)
+
+        recognised_words = recognition_result.text
+
+
+        print("SpeechPro ASR thinks you said : " + recognised_words)
+        print("SpeechPro Fuzzy partial score : " + str(fuzz.partial_ratio(random_words, recognised_words)))
+        print("Speechpro Fuzzy score : " + str(fuzz.ratio(random_words, recognised_words)))
+
+        if fuzz.ratio(random_words, recognised_words) < 50:
             print(
                 "\nThe words you have spoken aren't entirely correct. Please try again ...")
             os.remove(filename_wav)
@@ -385,6 +427,18 @@ def extract_features(rate, signal):
 
     return combined_features
 
+def russian_random_string():
+    filepath = './words.txt'
+    with open(filepath) as fp:
+       line = fp.readlines()
+       split_line = line[randint(0,len(line))][0:-1].split(' ')
+       return split_line
+
+def transliterate_str(text_str):
+    symbols = (u"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", u"abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_Y_EUA")
+    tr = {ord(a):ord(b) for a, b in zip(*symbols)}
+
+    return text_str.translate(tr)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT, debug=True, ssl_context='adhoc')
